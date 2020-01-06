@@ -28,6 +28,8 @@ export class HomeComponent implements OnInit {
   disabled = false;
   includeOrderProcessing = false;
   includeHelpDesk = false;
+  includeEndpoint = false;
+  includeLogistics = false;
   step = 0;
 
   products: any = [];

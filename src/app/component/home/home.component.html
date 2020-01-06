@@ -170,7 +170,7 @@
         <br>
 
 
-        <mat-accordion class="example-headers-align">
+        <mat-accordion class="example-headers-align" multi="true">
           <mat-expansion-panel [expanded]="isTelecom" (opened)="isTelecom">
             <mat-expansion-panel-header>
               <mat-panel-title>
@@ -586,6 +586,149 @@
                 </div>
               </div>
             </div>
+
+            <!--endpoint-->
+
+            <mat-divider></mat-divider>
+
+            <section class="example-section">
+              <mat-checkbox class="example-margin" color="primary" [(ngModel)]="includeEndpoint"
+                formControlName="secondCtrl">
+                Endpoint Management</mat-checkbox>
+            </section>
+
+            <div *ngIf="includeEndpoint" class="row mt-3">
+              <div class="col-sm-3">
+                <mat-form-field>
+                  <input matInput #endpoint value="0" placeholder="Units (Devices)" type="number"
+                    class="example-right-align">
+                </mat-form-field>
+              </div>
+              <div class="col-sm-1 text-center">
+                <div class="row text-center">
+                  <span>
+                    <h5>Price</h5>
+                  </span>
+                </div>
+                <div class="row text-center">
+                  <span>
+                    <b>{{2|currency}}</b>
+                  </span>
+                </div>
+              </div>
+
+              <div class="col-sm-2 text-center">
+                <div class="row text-center">
+                  <span>
+                    <h5> Total Price</h5>
+                  </span>
+                </div>
+                <div class="row text-center">
+                  <span>
+                    <b>{{(endpoint.value * 2)| currency}}</b>
+                  </span>
+                </div>
+              </div>
+
+              <div class="col-sm-2 text-center">
+                <div class="row">
+                  <span>
+                    <h5>Your Discount</h5>
+                  </span>
+                </div>
+                <div class="row text-center">
+                  <span style="color: red;">
+                    <b>-{{selected.termDiscount}}%</b>
+                  </span>
+                </div>
+              </div>
+
+
+              <div class="col-sm-4 text-center">
+                <div class="row">
+                  <span>
+                    <h5>Your Final Price</h5>
+                  </span>
+                </div>
+                <div class="row text-center">
+                  <span style="color: green;">
+                    <b>{{(endpoint.value * 2) - ((endpoint.value * 2) * selected.termDiscount/100) | currency}}</b>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!--endpoint-->
+
+            <mat-divider></mat-divider>
+
+            <section class="example-section">
+              <mat-checkbox class="example-margin" color="primary" [(ngModel)]="includeLogistics"
+                formControlName="secondCtrl">
+                Logistics</mat-checkbox>
+            </section>
+
+            <div *ngIf="includeLogistics" class="row mt-3">
+              <div class="col-sm-3">
+                <mat-form-field>
+                  <input matInput #logistics value="0" placeholder="Units (Devices)" type="number"
+                    class="example-right-align">
+                </mat-form-field>
+              </div>
+              <div class="col-sm-1 text-center">
+                <div class="row text-center">
+                  <span>
+                    <h5>Price</h5>
+                  </span>
+                </div>
+                <div class="row text-center">
+                  <span>
+                    <b>{{20|currency}}</b>
+                  </span>
+                </div>
+              </div>
+
+              <div class="col-sm-2 text-center">
+                <div class="row text-center">
+                  <span>
+                    <h5> Total Price</h5>
+                  </span>
+                </div>
+                <div class="row text-center">
+                  <span>
+                    <b>{{(logistics.value * 2)| currency}}</b>
+                  </span>
+                </div>
+              </div>
+
+              <div class="col-sm-2 text-center">
+                <div class="row">
+                  <span>
+                    <h5>Your Discount</h5>
+                  </span>
+                </div>
+                <div class="row text-center">
+                  <span style="color: red;">
+                    <b>-{{selected.termDiscount}}%</b>
+                  </span>
+                </div>
+              </div>
+
+
+              <div class="col-sm-4 text-center">
+                <div class="row">
+                  <span>
+                    <h5>Your Final Price</h5>
+                  </span>
+                </div>
+                <div class="row text-center">
+                  <span style="color: green;">
+                    <b>{{(logistics.value * 2) - ((logistics.value * 2) * selected.termDiscount/100) | currency}}</b>
+                  </span>
+                </div>
+              </div>
+            </div>
+
 
 
             <mat-action-row>
