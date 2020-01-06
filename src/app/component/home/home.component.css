@@ -59,3 +59,7 @@ input.example-right-align::-webkit-inner-spin-button {
 input.example-right-align {
   -moz-appearance: textfield;
 }
+
+.mat-action-row {
+  place-content: space-between;
+}

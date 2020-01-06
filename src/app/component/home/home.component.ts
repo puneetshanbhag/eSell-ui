@@ -27,9 +27,28 @@ export class HomeComponent implements OnInit {
   labelPosition = 'after';
   disabled = false;
   includeOrderProcessing = false;
+  includeHelpDesk = false;
   step = 0;
 
   products: any = [];
+
+  contractTerm: any = [
+    {
+      term: '1 Year',
+      termValue: 1,
+      termDiscount: 5
+    },
+    {
+      term: '2 Year',
+      termValue: 2,
+      termDiscount: 7
+    },
+    {
+      term: '3 Year',
+      termValue: 3,
+      termDiscount: 10
+    }
+  ];
 
   constructor(
     // tslint:disable-next-line:variable-name
@@ -47,6 +66,9 @@ export class HomeComponent implements OnInit {
     });
 
     this.products = this.dataService.getProducts();
+
+    this.selected = this.contractTerm[0];
+    console.log(this.selected);
   }
 
   async generatePdf(action = 'open') {

@@ -155,17 +155,18 @@
 
         <div class="row example-full-width">
           <div class="col">
-            <mat-form-field style="width:225px !important">
+            <mat-form-field style="width:200px !important">
               <mat-label>Select Contract Term</mat-label>
               <mat-select [(value)]="selected" formControlName="secondCtrl">
-                <mat-option value="1">1 Year</mat-option>
-                <mat-option value="2">2 Year</mat-option>
-                <mat-option value="3">3 Year</mat-option>
+                <mat-option *ngFor="let term of contractTerm" [value]="term">
+                  {{ term.term }}
+                </mat-option>
               </mat-select>
-              <mat-hint class="example-full-width">Customer contract term : {{selected}} Year is selected</mat-hint>
+              <mat-hint class="example-full-width">Customer contract term : {{selected.term}} is selected</mat-hint>
             </mat-form-field>
           </div>
         </div>
+
         <br>
 
 
@@ -193,7 +194,8 @@
             <div class="row">
               <div class="col-sm-3">
                 <mat-form-field>
-                  <input matInput #annualSpend placeholder="Spend (Annual)" type="number" class="example-right-align">
+                  <input matInput id="annualSpend" name="annualSpend" #annualSpend value="0"
+                    placeholder="Spend (Annual)" type="number" class="example-right-align" required>
                   <span matPrefix>$&nbsp;</span>
                   <span matSuffix>.00</span>
                   <mat-hint>Enter customer's estimated Annual Spend</mat-hint>
@@ -233,7 +235,7 @@
                 </div>
                 <div class="row text-center">
                   <span style="color: red;">
-                    <b>-10%</b>
+                    <b>-{{selected.termDiscount}}%</b>
                   </span>
                 </div>
               </div>
@@ -247,20 +249,36 @@
                 </div>
                 <div class="row text-center">
                   <span style="color: green;">
-                    <b>{{(annualSpend.value * 1.5/100) - (annualSpend.value * 1.5/100) * 10 /100 | currency}}</b>
+                    <b>{{(annualSpend.value * 1.5/100) - (annualSpend.value * 1.5/100) * selected.termDiscount/100 | currency}}</b>
                   </span>
                 </div>
               </div>
 
             </div>
+            <br>
+
+            <mat-chip-list>
+              <h6>Includes</h6>
+              <mat-chip>
+                <mat-icon>check_circle_outline</mat-icon>&nbsp;Order Management
+              </mat-chip>
+              <mat-chip>
+                <mat-icon>check_circle_outline</mat-icon>&nbsp;Invoice Management
+              </mat-chip>
+              <mat-chip>
+                <mat-icon>check_circle_outline</mat-icon>&nbsp;Expense Management
+              </mat-chip>
+              <mat-chip>
+                <mat-icon>check_circle_outline</mat-icon>&nbsp;Inventory Management
+              </mat-chip>
+              <mat-chip>
+                <mat-icon>check_circle_outline</mat-icon>&nbsp;Bill Pay
+              </mat-chip>
+            </mat-chip-list>
+            <br>
 
 
-            <!-- <mat-list>
-                <h3 mat-subheader>Folders</h3>
-                
-              </mat-list> -->
-
-            <mat-list dense>
+            <!-- <mat-list dense>
               <h3 matSubheader>Includes</h3>
               <mat-list-item>
                 <mat-icon matListIcon>done_outline</mat-icon>
@@ -282,7 +300,7 @@
                 <mat-icon matListIcon>done_outline</mat-icon>
                 Bill Pay
               </mat-list-item>
-            </mat-list>
+            </mat-list> -->
             <mat-divider></mat-divider>
 
             <section class="example-section">
@@ -294,7 +312,7 @@
             <div *ngIf="includeOrderProcessing" class="row mt-3">
               <div class="col-sm-3">
                 <mat-form-field>
-                  <input matInput #annualOrders placeholder="Order Count (Annual)" type="number"
+                  <input matInput #annualOrders value="0" placeholder="Order Count (Annual)" type="number"
                     class="example-right-align">
                   <mat-hint>Enter customer's estimated Annual Order Processing</mat-hint>
                 </mat-form-field>
@@ -333,7 +351,7 @@
                 </div>
                 <div class="row text-center">
                   <span style="color: red;">
-                    <b>-10%</b>
+                    <b>-{{selected.termDiscount}}%</b>
                   </span>
                 </div>
               </div>
@@ -347,13 +365,23 @@
                 </div>
                 <div class="row text-center">
                   <span style="color: green;">
-                    <b>{{(annualOrders.value * 135) - ((annualOrders.value * 135) * 10 /100) | currency}}</b>
+                    <b>{{(annualOrders.value * 135) - ((annualOrders.value * 135) * selected.termDiscount/100) | currency}}</b>
                   </span>
                 </div>
               </div>
             </div>
 
             <mat-action-row>
+              <div class="row mt-1">
+                <div class="col-sm-3">
+                  <h5 matLine>Subtotal</h5>
+                </div>
+                <div class="col-sm-4 text-center">
+                  <span *ngIf="annualSpend.dirty && annualOrders.dirty" style="color: green;">
+                    <b>{{((annualSpend.value * 1.5/100) - (annualSpend.value * 1.5/100) * selected.termDiscount/100) +  ((annualOrders.value * 135) - ((annualOrders.value * 135) * selected.termDiscount/100)) | currency}}</b>
+                  </span>
+                </div>
+              </div>
               <button mat-button color="primary" (click)="nextStep()">Next</button>
             </mat-action-row>
           </mat-expansion-panel>
@@ -373,10 +401,192 @@
                 <mat-icon>settings_cell</mat-icon>
               </mat-panel-description>
             </mat-expansion-panel-header>
+            <mat-divider></mat-divider>
+            <br>
 
-            <!-- <mat-form-field>
-              <input matInput placeholder="Country">
-            </mat-form-field> -->
+            <!-- MOBILE Start-->
+            <div class="row">
+              <div class="col-sm-3">
+                <mat-form-field>
+                  <input matInput id="mobileDeviceCount" name="mobileDeviceCount" #mobileDeviceCount value="0"
+                    placeholder="Units (Devices)" type="number" class="example-right-align" required>
+                  <mat-hint>Enter customer's estimated Mobile Devices</mat-hint>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-1 text-center">
+                <div class="row text-center">
+                  <span>
+                    <h5>Price</h5>
+                  </span>
+                </div>
+                <div class="row text-center">
+                  <span>
+                    <b>{{ 3 | currency}}</b>
+                  </span>
+                </div>
+              </div>
+
+              <div class="col-sm-2 text-center">
+                <div class="row text-center">
+                  <span>
+                    <h5> Total Price</h5>
+                  </span>
+                </div>
+                <div class="row text-center">
+                  <span>
+                    <b>{{(mobileDeviceCount.value * 3)| currency}}</b>
+                  </span>
+                </div>
+              </div>
+
+              <div class="col-sm-2 text-center">
+                <div class="row">
+                  <span>
+                    <h5>Your Discount</h5>
+                  </span>
+                </div>
+                <div class="row text-center">
+                  <span style="color: red;">
+                    <b>-{{selected.termDiscount}}%</b>
+                  </span>
+                </div>
+              </div>
+
+
+              <div class="col-sm-4 text-center">
+                <div class="row">
+                  <span>
+                    <h5>Your Final Price</h5>
+                  </span>
+                </div>
+                <div class="row text-center">
+                  <span style="color: green;">
+                    <b>{{(mobileDeviceCount.value * 3) - (mobileDeviceCount.value * 3) * selected.termDiscount/100 | currency}}</b>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <br>
+
+            <mat-chip-list>
+              <h6>Includes</h6>
+              <mat-chip>
+                <mat-icon>check_circle_outline</mat-icon>&nbsp;Order Management
+              </mat-chip>
+              <mat-chip>
+                <mat-icon>check_circle_outline</mat-icon>&nbsp;Invoice Management
+              </mat-chip>
+              <mat-chip>
+                <mat-icon>check_circle_outline</mat-icon>&nbsp;Expense Management
+              </mat-chip>
+              <mat-chip>
+                <mat-icon>check_circle_outline</mat-icon>&nbsp;Inventory Management
+              </mat-chip>
+              <mat-chip>
+                <mat-icon>check_circle_outline</mat-icon>&nbsp;Bill Pay
+              </mat-chip>
+              <mat-chip>
+                <mat-icon>check_circle_outline</mat-icon>&nbsp;Help Chat
+              </mat-chip>
+            </mat-chip-list>
+
+            <!-- <mat-list dense>
+              <h6 matSubheader>Includes</h6>
+              <mat-list-item>
+                <mat-icon matListIcon>done_outline</mat-icon>
+                Order Management
+              </mat-list-item>
+              <mat-list-item>
+                <mat-icon matListIcon>done_outline</mat-icon>
+                Invoice Management
+              </mat-list-item>
+              <mat-list-item>
+                <mat-icon matListIcon>done_outline</mat-icon>
+                Expense Management
+              </mat-list-item>
+              <mat-list-item>
+                <mat-icon matListIcon>done_outline</mat-icon>
+                Inventory Management
+              </mat-list-item>
+              <mat-list-item>
+                <mat-icon matListIcon>done_outline</mat-icon>
+                Bill Pay
+              </mat-list-item>
+              <mat-list-item>
+                <mat-icon matListIcon>done_outline</mat-icon>
+                Help Chat
+              </mat-list-item>
+            </mat-list> -->
+            <br>
+            <mat-divider></mat-divider>
+
+            <section class="example-section">
+              <mat-checkbox class="example-margin" color="primary" [(ngModel)]="includeHelpDesk"
+                formControlName="secondCtrl">
+                Help Desk</mat-checkbox>
+            </section>
+
+            <div *ngIf="includeHelpDesk" class="row mt-3">
+              <div class="col-sm-3">
+                <mat-form-field>
+                  <input matInput #helpDesk value="0" placeholder="Units (Devices)" type="number"
+                    class="example-right-align">
+                </mat-form-field>
+              </div>
+              <div class="col-sm-1 text-center">
+                <div class="row text-center">
+                  <span>
+                    <h5>Price</h5>
+                  </span>
+                </div>
+                <div class="row text-center">
+                  <span>
+                    <b>{{2|currency}}</b>
+                  </span>
+                </div>
+              </div>
+
+              <div class="col-sm-2 text-center">
+                <div class="row text-center">
+                  <span>
+                    <h5> Total Price</h5>
+                  </span>
+                </div>
+                <div class="row text-center">
+                  <span>
+                    <b>{{(helpDesk.value * 2)| currency}}</b>
+                  </span>
+                </div>
+              </div>
+
+              <div class="col-sm-2 text-center">
+                <div class="row">
+                  <span>
+                    <h5>Your Discount</h5>
+                  </span>
+                </div>
+                <div class="row text-center">
+                  <span style="color: red;">
+                    <b>-{{selected.termDiscount}}%</b>
+                  </span>
+                </div>
+              </div>
+
+
+              <div class="col-sm-4 text-center">
+                <div class="row">
+                  <span>
+                    <h5>Your Final Price</h5>
+                  </span>
+                </div>
+                <div class="row text-center">
+                  <span style="color: green;">
+                    <b>{{(helpDesk.value * 2) - ((helpDesk.value * 2) * selected.termDiscount/100) | currency}}</b>
+                  </span>
+                </div>
+              </div>
+            </div>
+
 
             <mat-action-row>
               <button mat-button color="warn" (click)="prevStep()">Previous</button>
