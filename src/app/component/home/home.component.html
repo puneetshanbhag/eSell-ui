@@ -162,7 +162,8 @@
                   {{ term.term }}
                 </mat-option>
               </mat-select>
-              <mat-hint class="example-full-width">Customer contract term : {{selected.term}} is selected</mat-hint>
+              <mat-hint class="example-full-width">Customer contract term : {{selected.termValue}} year is selected
+              </mat-hint>
             </mat-form-field>
           </div>
         </div>
@@ -171,11 +172,11 @@
 
 
         <mat-accordion class="example-headers-align" multi="true">
-          <mat-expansion-panel [expanded]="isTelecom" (opened)="isTelecom">
+          <mat-expansion-panel [expanded]="isTelecomChecked">
             <mat-expansion-panel-header>
               <mat-panel-title>
                 <section class="example-section">
-                  <mat-checkbox class="example-margin" color="primary" labelPosition="after" #isTelecom
+                  <mat-checkbox class="example-margin" color="primary" labelPosition="after"
                     [(ngModel)]="isTelecomChecked" formControlName="secondCtrl">
                     <span>Telecom</span>
                   </mat-checkbox>
@@ -235,7 +236,7 @@
                 </div>
                 <div class="row text-center">
                   <span style="color: red;">
-                    <b>-{{selected.termDiscount}}%</b>
+                    <b>{{selected.termDiscount}}%</b>
                   </span>
                 </div>
               </div>
@@ -351,7 +352,7 @@
                 </div>
                 <div class="row text-center">
                   <span style="color: red;">
-                    <b>-{{selected.termDiscount}}%</b>
+                    <b>{{selected.termDiscount}}%</b>
                   </span>
                 </div>
               </div>
@@ -386,11 +387,12 @@
             </mat-action-row>
           </mat-expansion-panel>
 
-          <mat-expansion-panel [expanded]="!isMobileChecked" (opened)="setStep(1)">
+          <!-- MOBILE Start-->
+          <mat-expansion-panel [expanded]="isMobileChecked">
             <mat-expansion-panel-header>
               <mat-panel-title>
                 <section class="example-section">
-                  <mat-checkbox class="example-margin" color="primary" labelPosition="after" #isMobile
+                  <mat-checkbox class="example-margin" color="primary" labelPosition="after"
                     [(ngModel)]="isMobileChecked" formControlName="secondCtrl">
                     <span>Mobile</span>
                   </mat-checkbox>
@@ -403,8 +405,6 @@
             </mat-expansion-panel-header>
             <mat-divider></mat-divider>
             <br>
-
-            <!-- MOBILE Start-->
             <div class="row">
               <div class="col-sm-3">
                 <mat-form-field>
@@ -447,7 +447,7 @@
                 </div>
                 <div class="row text-center">
                   <span style="color: red;">
-                    <b>-{{selected.termDiscount}}%</b>
+                    <b>{{selected.termDiscount}}%</b>
                   </span>
                 </div>
               </div>
@@ -567,7 +567,7 @@
                 </div>
                 <div class="row text-center">
                   <span style="color: red;">
-                    <b>-{{selected.termDiscount}}%</b>
+                    <b>{{selected.termDiscount}}%</b>
                   </span>
                 </div>
               </div>
@@ -638,7 +638,7 @@
                 </div>
                 <div class="row text-center">
                   <span style="color: red;">
-                    <b>-{{selected.termDiscount}}%</b>
+                    <b>{{selected.termDiscount}}%</b>
                   </span>
                 </div>
               </div>
@@ -709,7 +709,7 @@
                 </div>
                 <div class="row text-center">
                   <span style="color: red;">
-                    <b>-{{selected.termDiscount}}%</b>
+                    <b>{{selected.termDiscount}}%</b>
                   </span>
                 </div>
               </div>
@@ -737,22 +737,112 @@
             </mat-action-row>
           </mat-expansion-panel>
 
-          <mat-expansion-panel [expanded]="!isCloudChecked" (opened)="setStep(2)">
+          <!-- CLOUD Start-->
+          <mat-expansion-panel [expanded]="isCloudChecked">
             <mat-expansion-panel-header>
               <mat-panel-title>
                 <section class="example-section">
-                  <mat-checkbox class="example-margin" color="primary" labelPosition="after" #isCloud
+                  <mat-checkbox class="example-margin" color="primary" labelPosition="after"
                     [(ngModel)]="isCloudChecked" formControlName="secondCtrl">
                     <span>Cloud</span>
                   </mat-checkbox>
                 </section>
-
               </mat-panel-title>
               <mat-panel-description>
                 Cloud Product & Service
                 <mat-icon>cloud_queue</mat-icon>
               </mat-panel-description>
             </mat-expansion-panel-header>
+
+            <mat-divider></mat-divider>
+            <br>
+
+            <div class="row">
+              <div class="col-sm-3">
+                <mat-form-field>
+                  <input matInput id="annualSpendCloud" name="annualSpendCloud" #annualSpendCloud value="0"
+                    placeholder="Spend (Annual)" type="number" class="example-right-align" required>
+                  <span matPrefix>$&nbsp;</span>
+                  <span matSuffix>.00</span>
+                  <mat-hint>Enter customer's estimated Annual Spend(cloud)</mat-hint>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-1 text-center">
+                <div class="row text-center">
+                  <span>
+                    <h5>Price</h5>
+                  </span>
+                </div>
+                <div class="row text-center">
+                  <span>
+                    <b>1.0%</b>
+                  </span>
+                </div>
+              </div>
+
+              <div class="col-sm-2 text-center">
+                <div class="row text-center">
+                  <span>
+                    <h5> Total Price</h5>
+                  </span>
+                </div>
+                <div class="row text-center">
+                  <span>
+                    <b>{{(annualSpendCloud.value * 1/100)| currency}}</b>
+                  </span>
+                </div>
+              </div>
+
+              <div class="col-sm-2 text-center">
+                <div class="row">
+                  <span>
+                    <h5>Your Discount</h5>
+                  </span>
+                </div>
+                <div class="row text-center">
+                  <span style="color: red;">
+                    <b>{{selected.termDiscount}}%</b>
+                  </span>
+                </div>
+              </div>
+
+
+              <div class="col-sm-4 text-center">
+                <div class="row">
+                  <span>
+                    <h5>Your Final Price</h5>
+                  </span>
+                </div>
+                <div class="row text-center">
+                  <span style="color: green;">
+                    <b>{{(annualSpendCloud.value * 1.0/100) - (annualSpendCloud.value * 1.0/100) * selected.termDiscount/100 | currency}}</b>
+                  </span>
+                </div>
+              </div>
+
+            </div>
+            <br>
+
+            <mat-chip-list>
+              <h6>Includes</h6>
+              <mat-chip>
+                <mat-icon>check_circle_outline</mat-icon>&nbsp;Invoice Management
+              </mat-chip>
+              <mat-chip>
+                <mat-icon>check_circle_outline</mat-icon>&nbsp;Expense Management
+              </mat-chip>
+              <mat-chip>
+                <mat-icon>check_circle_outline</mat-icon>&nbsp;Inventory Management
+              </mat-chip>
+              <mat-chip>
+                <mat-icon>check_circle_outline</mat-icon>&nbsp;Bill Pay
+              </mat-chip>
+              <mat-chip color="accent" selected>
+                <mat-icon>check_circle_outline</mat-icon>&nbsp;Order Management** &nbsp;
+                <small> **coming soon</small>
+              </mat-chip>
+            </mat-chip-list>
+            <br>
 
             <mat-action-row>
               <button mat-button color="warn" (click)="prevStep()">Previous</button>

@@ -36,6 +36,11 @@ export class HomeComponent implements OnInit {
 
   contractTerm: any = [
     {
+      term: 'select',
+      termValue: 0,
+      termDiscount: 0
+    },
+    {
       term: '1 Year',
       termValue: 1,
       termDiscount: 5
@@ -114,6 +119,7 @@ export class HomeComponent implements OnInit {
 
   setStep(index: number) {
     this.step = index;
+    this.isCloudChecked = !this.isCloudChecked;
   }
 
   nextStep() {
@@ -122,6 +128,12 @@ export class HomeComponent implements OnInit {
 
   prevStep() {
     this.step--;
+  }
+
+  cloudPanelOpened() {
+    this.isCloudChecked = !this.isCloudChecked;
+    console.log('Cloud Panel Opened');
+    // this.isCloudChecked = true;
   }
 
   getDocumentFooter() {
