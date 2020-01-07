@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
   isCloudChecked = false;
 
   checked = false;
-  isCopyCompanyAddress = false;
+  billingAddrSameAsCompanyAddr = false;
   indeterminate = false;
   labelPosition = 'after';
   disabled = false;
@@ -134,6 +134,11 @@ export class HomeComponent implements OnInit {
     this.isCloudChecked = !this.isCloudChecked;
     console.log('Cloud Panel Opened');
     // this.isCloudChecked = true;
+  }
+
+  currencyInputChanged(value) {
+    const num = value.replace(/[$,]/g, '');
+    return Number(num);
   }
 
   getDocumentFooter() {

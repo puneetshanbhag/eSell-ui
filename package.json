@@ -23,6 +23,8 @@
     "@angular/router": "~7.2.0",
     "bootstrap": "^4.4.1",
     "core-js": "^2.5.4",
+    "docx": "^5.0.0",
+    "ngx-mask": "^8.1.7",
     "pdfmake": "^0.1.63",
     "rxjs": "~6.3.3",
     "tslib": "^1.9.0",

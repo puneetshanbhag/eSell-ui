@@ -39,7 +39,7 @@
 }
 
 .example-headers-align .mat-expansion-panel-header-description {
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
 }
 
