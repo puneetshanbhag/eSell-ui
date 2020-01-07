@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DataService } from 'src/app/service/data.service';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
+import { DataService } from 'src/app/service/data.service';
+
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -117,6 +118,19 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  // generateDocx() {
+  //   const document = new OrderFormDocumentCreator();
+  //   const orderForm = document.create({});
+
+  //   Packer.toBlob(orderForm).then(blob => {
+  //     saveAs(blob, 'TangoeOrderForm.docx');
+  //   });
+  // }
+
+  generateDoxc() {
+    window.open('/assets/templates/2.0 _Tangoe_Order_Form.docx', '_blank');
+  }
+
   setStep(index: number) {
     this.step = index;
     this.isCloudChecked = !this.isCloudChecked;
@@ -128,12 +142,6 @@ export class HomeComponent implements OnInit {
 
   prevStep() {
     this.step--;
-  }
-
-  cloudPanelOpened() {
-    this.isCloudChecked = !this.isCloudChecked;
-    console.log('Cloud Panel Opened');
-    // this.isCloudChecked = true;
   }
 
   currencyInputChanged(value) {

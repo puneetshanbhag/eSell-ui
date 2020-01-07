@@ -794,7 +794,7 @@
                 <mat-icon>check_circle_outline</mat-icon>&nbsp;Bill Pay
               </mat-chip>
               <mat-chip color="accent" selected>
-                <mat-icon>check_circle_outline</mat-icon>&nbsp;Order Management** &nbsp;
+                <mat-icon>add_circle_outline</mat-icon>&nbsp;Order Management** &nbsp;
                 <small> **coming soon</small>
               </mat-chip>
             </mat-chip-list>
@@ -838,6 +838,9 @@
         </button>
         <button class="btn btn-outline-success mr-2 my-2 my-sm-0" mat-button (click)="generatePdf('download')">Download
           PDF <mat-icon>save_alt</mat-icon>
+        </button>
+        <button class="btn btn-outline-success mr-2 my-2 my-sm-0" mat-button (click)="generateDoxc()">Download
+          Docx <mat-icon>save_alt</mat-icon>
         </button>
       </div>
     </mat-step>

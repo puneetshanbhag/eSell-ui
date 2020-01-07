@@ -17,13 +17,14 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatStepperModule } from '@angular/material/stepper';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgxMaskModule, IConfig } from 'ngx-mask';
+import { IConfig, NgxMaskModule } from 'ngx-mask';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './component/home/home.component';
 import { NavBarComponent } from './component/nav-bar/nav-bar.component';
 
+// below line is required by ngx-mask as its preconfig
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
 
 @NgModule({
